@@ -1,0 +1,7 @@
+# sample dataset
+id,job_title,category,location
+1,Software Engineer,Tech,Remote
+2,Data Analyst,Tech,New York
+3,Project Manager,Business,Remote
+4,UX Designer,Design,London
+5,Marketing Specialist,Business,Chicago

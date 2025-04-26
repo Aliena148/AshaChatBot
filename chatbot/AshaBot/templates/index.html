@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AshaBot</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+
+    <div id="chat-container">
+        <h2>AshaBot</h2>
+        <div id="chat-history" class="chat-history"></div>
+        <form id="chat-form">
+            <input type="text" id="user-input" placeholder="Type your message..." required />
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script>
+        const chatForm = document.getElementById('chat-form');
+        const chatHistory = document.getElementById('chat-history');
+        const userInput = document.getElementById('user-input');
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const message = userInput.value;
+            appendMessage("You", message);
+            userInput.value = "";
+
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message })
+            });
+
+            const data = await response.json();
+            appendMessage("AshaBot", data.reply);
+        });
+
+        function appendMessage(sender, message) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('chat-message');
+            msgDiv.innerHTML = "<strong>"+ sender +":</strong>"+message;
+            chatHistory.appendChild(msgDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+    </script>
+
+</body>
+</html>
